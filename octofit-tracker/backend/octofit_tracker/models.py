@@ -7,7 +7,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
-    team = models.ForeignKey('Team', null=True, blank=True, on_delete=models.SET_NULL)
+    team = models.ForeignKey('Team', null=True, blank=True, on_delete=models.SET_NULL, related_name='user_team')
     def __str__(self):
         return self.username
 
@@ -15,7 +15,7 @@ class User(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    members = models.ArrayReferenceField(to=User, blank=True)
+    members = models.ArrayReferenceField(to=User, blank=True, related_name='member_teams')
     def __str__(self):
         return self.name
 
